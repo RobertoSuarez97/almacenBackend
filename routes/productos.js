@@ -25,13 +25,12 @@ const uploadFileToFtp = async (localPath, remoteFilename) => {
     await client.access(ftpConfig);
 
     console.log('📂 Conectado al FTP');
-
-    await client.cd('public_html/assets/productos');
-    
+    console.log('📁 Directorio actual antes de subir:', await client.pwd());
     // Subir el archivo
     console.log('localPath', localPath);
     console.log('remoteFilename', remoteFilename);
     await client.uploadFrom(localPath, `${remoteFilename}`);
+    console.log('✅ Archivo subido correctamente:', remoteFilename);
   } catch (err) {
     console.error('Error al subir archivo por FTP:', err);
     throw err;
