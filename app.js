@@ -21,7 +21,9 @@ app.use('/api/categorias', categoriasRoutes);
 app.use('/api/marcas', marcasRoutes);
 app.use('/api/auth', authRoutes);
 
-// Iniciar el servidor
-app.listen(port, () => {
-  console.log(`Servidor corriendo en http://localhost:${port}`);
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
+
