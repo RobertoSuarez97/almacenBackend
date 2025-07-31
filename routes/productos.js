@@ -12,21 +12,30 @@ const ftpConfig = {
   host: process.env.FTP_HOST,
   user: process.env.FTP_USER,
   password: process.env.FTP_PASSWORD,
-  secure: process.env.FTP_SECURE === 'true',
+  port: process.env.FTP_PORT,
+  secure: process.env.FTP_SECURE
 };
 
 // Función para subir archivos a Hostinger vía FTP
 const uploadFileToFtp = async (localPath, remoteFilename) => {
   const client = new ftp.Client();
+  client.ftp.verbose = true; // para ver más logs
+
   try {
     await client.access(ftpConfig);
+
+    console.log('📂 Conectado al FTP');
+
+    // Ir al directorio donde van los archivos
+    await client.ensureDir('assets/productos');
+    
+    // Subir el archivo
     await client.uploadFrom(localPath, `assets/productos/${remoteFilename}`);
   } catch (err) {
     console.error('Error al subir archivo por FTP:', err);
     throw err;
   } finally {
     client.close();
-    fs.unlinkSync(localPath); // Eliminar archivo local tras subir
   }
 };
 
