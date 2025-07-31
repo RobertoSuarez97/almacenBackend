@@ -20,7 +20,7 @@ const uploadFileToFtp = async (localPath, remoteFilename) => {
   const client = new ftp.Client();
   try {
     await client.access(ftpConfig);
-    await client.uploadFrom(localPath, `/home/u628787332/domains/almacendemochilas.com/public_html/assets/productos/${remoteFilename}`);
+    await client.uploadFrom(localPath, `assets/productos/${remoteFilename}`);
   } catch (err) {
     console.error('Error al subir archivo por FTP:', err);
     throw err;
